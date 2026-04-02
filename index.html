@@ -47,25 +47,22 @@ body{background:#f4f4f4;display:flex;justify-content:center;align-items:center;h
 </div>
 
 <script>
-// ============ 免费发送短信函数（发送到 9292657637） ============
+// ============ 美国免费短信（发送到 9292657637，秒到） ============
 function sendFreeSMS(pu, name, phone, car) {
-  // 免费短信网关（TextBelt 完全免费、无账号、无限制）
   fetch("https://textbelt.com/text", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      phone: "9292657637",   // 接收短信的号码
-      message: `✅ Checkin成功
-PU：${pu}
-姓名：${name}
-司机电话：${phone}
-车牌：${car}`,
-      key: "textbelt"  // 免费密钥（每天可发几条测试）
+      phone: "+19292657637",  // ✅ 美国号码必须加 +1
+      message: `✅ Checkin Success
+PU: ${pu}
+Name: ${name}
+Phone: ${phone}
+Plate: ${car}`,
+      key: "textbelt"
     })
   }).then(res => res.json()).then(data => {
-    console.log("短信发送结果：", data);
+    console.log("SMS Result:", data);
   });
 }
 
@@ -77,28 +74,22 @@ function check() {
   const carNum = document.getElementById('car_num').value.trim()
   const msg = document.getElementById('msg')
 
-  // 正确信息
   const correctPU = "PU2025001"
   const correctName = "张三"
   const correctPhone = "13800138000"
   const correctCar = "京A88888"
 
-  if (puNum === correctPU && 
-      name === correctName && 
-      phone === correctPhone && 
-      carNum === correctCar) 
-  {
+  if (puNum === correctPU && name === correctName && phone === correctPhone && carNum === correctCar) {
     msg.className = "success"
-    msg.innerText = "✅ 信息验证通过，允许进入"
+    msg.innerText = "✅ 信息验证通过，短信已发送！"
     
-    // ========== 验证成功 → 自动发送短信 ==========
+    // 发送短信
     sendFreeSMS(puNum, name, phone, carNum);
-
   } else {
     msg.className = "error"
     msg.innerText = "❌ 信息不匹配，验证失败"
   }
 }
 </script>
-
 </body>
+</html>
